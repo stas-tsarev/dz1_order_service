@@ -1,0 +1,24 @@
+post:
+  summary: Create new order
+  operationId: CreateOrder
+  tags:
+    - Order
+  requestBody:
+    description: Create new order
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/create_order_request.yaml
+  responses:
+    '422':
+      description: The part don't find in inventory
+      content:
+        application/json:
+          schema:
+            $ref: ../components/errors/422_unprocessable_entity.yaml
+    '201':
+      description: Order information has been successfully created
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/create_order_response.yaml

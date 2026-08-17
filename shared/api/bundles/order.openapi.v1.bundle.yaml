@@ -1,0 +1,308 @@
+openapi: 3.0.3
+info:
+  title: OrderService API
+  version: 1.0.0
+  description: API для работы с заказами деталей
+tags:
+  - name: Order
+    description: Операции с заказами - создание, оплата, получение и отмена
+paths:
+  /api/v1/orders:
+    post:
+      summary: Create new order
+      operationId: CreateOrder
+      tags:
+        - Order
+      requestBody:
+        description: Create new order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_order_request'
+      responses:
+        '201':
+          description: Order information has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/create_order_response'
+        '422':
+          description: The part don't find in inventory
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/422_unprocessable_entity'
+  /api/v1/orders/{order_uuid}/pay:
+    parameters:
+      - $ref: '#/components/parameters/order_uuid'
+    post:
+      summary: Pay order by UUID
+      operationId: PayOrder
+      tags:
+        - Order
+      requestBody:
+        description: Pay order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pay_order_request'
+      responses:
+        '200':
+          description: Order has been successfully payed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pay_order_response'
+        '404':
+          description: The order don't find
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_not_found'
+  /api/v1/orders/{order_uuid}:
+    parameters:
+      - $ref: '#/components/parameters/order_uuid'
+    get:
+      summary: Get order by UUID
+      operationId: GetOrder
+      tags:
+        - Order
+      responses:
+        '200':
+          description: Order has been successfully found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_order_response'
+        '404':
+          description: The order don't find
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_not_found'
+  /api/v1/orders/{order_uuid}/cancel:
+    parameters:
+      - $ref: '#/components/parameters/order_uuid'
+    post:
+      summary: Cancel order by UUID
+      operationId: CancelOrder
+      tags:
+        - Order
+      requestBody:
+        description: Cancel order
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete_order_request'
+      responses:
+        '204':
+          description: Order has been successfully canceled
+        '404':
+          description: The order don't find
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_not_found'
+        '409':
+          description: Order has already been paid for and cannot be cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/409_conflict'
+components:
+  schemas:
+    create_order_request:
+      type: object
+      required:
+        - user_uuid
+        - part_uuids
+      properties:
+        user_uuid:
+          type: string
+          format: uuid
+          description: UUID пользователя
+          example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+        part_uuids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: UUID деталей для заказа
+          example:
+            - 7ac1cf89-457e-4a67-19d2-b1ef41fd5326
+    create_order_response:
+      type: object
+      required:
+        - order_uuid
+        - total_price
+      properties:
+        order_uuid:
+          type: string
+          format: uuid
+          description: UUID созданного заказа
+          example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+        total_price:
+          type: number
+          format: float
+          description: Общая стоимость заказа
+          example: 123.45
+          minimum: 0
+    422_unprocessable_entity:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: HTTP-код ошибки
+          example: 422
+        message:
+          type: string
+          description: Описание ошибки
+          example: 'Unprocessable Entity: The part don''t find in inventory'
+    payment_method:
+      type: string
+      description: Payment Method
+      enum:
+        - UNKNOWN
+        - CARD
+        - SBP
+        - CREDIT_CARD
+        - INVESTOR_MONEY
+      example: CARD
+    pay_order_request:
+      type: object
+      required:
+        - payment_method
+      properties:
+        payment_method:
+          $ref: '#/components/schemas/payment_method'
+    pay_order_response:
+      type: object
+      required:
+        - transaction_uuid
+      properties:
+        transaction_uuid:
+          type: string
+          format: uuid
+          description: UUID транзакции
+          example: 8ba7b810-9dad-11d1-80b4-00c04fd430c8
+    404_not_found:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: HTTP-код ошибки
+          example: 404
+        message:
+          type: string
+          description: Описание ошибки
+          example: 'Not Found: The order don''t find'
+    order_status:
+      type: string
+      description: Payment Method
+      enum:
+        - PENDING_PAYMENT
+        - PAID
+        - CANCELED
+      example: PENDING_PAYMENT
+    order:
+      type: object
+      required:
+        - order_uuid
+        - user_uuid
+        - part_uuids
+        - total_price
+        - transaction_uuid
+        - payment_method
+        - status
+      properties:
+        order_uuid:
+          type: string
+          format: uuid
+          description: UUID заказа
+          example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+        user_uuid:
+          type: string
+          format: uuid
+          description: UUID пользователя
+          example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+        part_uuids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: UUID деталей для заказа
+          example:
+            - 7ac1cf89-457e-4a67-19d2-b1ef41fd5326
+        total_price:
+          type: number
+          format: float
+          description: Общая стоимость заказа
+          example: 123.45
+          minimum: 0
+        transaction_uuid:
+          type: string
+          format: uuid
+          nullable: true
+          description: UUID транзакции (если оплачен)
+          example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+        payment_method:
+          $ref: '#/components/schemas/payment_method'
+          nullable: true
+          description: Способ оплаты (если оплачен)
+          example: CARD
+        status:
+          $ref: '#/components/schemas/order_status'
+          description: Статус заказа
+          example: PENDING_PAYMENT
+    get_order_response:
+      type: object
+      required:
+        - payment_method
+      properties:
+        payment_method:
+          $ref: '#/components/schemas/order'
+    delete_order_request:
+      type: object
+      required:
+        - order_uuid
+      properties:
+        order_uuid:
+          type: string
+          format: uuid
+          description: UUID отменяемого заказа
+          example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+    409_conflict:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          description: HTTP-код ошибки
+          example: 409
+        message:
+          type: string
+          description: Описание ошибки
+          example: 'Conflict: The order cannot be cancelled'
+  parameters:
+    order_uuid:
+      name: order_uuid
+      in: path
+      required: true
+      description: UUID заказа, для получения, оплаты или отмены заказа
+      schema:
+        type: string
+        format: uuid
+        description: UUID заказа
+        example: 8ac8cf24-379e-4a69-89d2-b1ef41fd5711
+x-ogen:
+  target: ./shared/pkg/openapi/order/v1
+  package: order_v1
+  clean: true

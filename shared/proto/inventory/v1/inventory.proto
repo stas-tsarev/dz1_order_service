@@ -1,0 +1,112 @@
+syntax = "proto3";
+
+package inventory.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "https://github.com/stas-tsarev/dz1_order_service/pkg/proto/inventory/v1;inventory_v1";
+
+service InventoryService {
+  rpc GetPart(GetPartRequest) returns (GetPartResponse);
+  rpc ListParts(ListPartsRequest) returns (ListPartsResponse);
+  rpc CreatePart(CreatePartRequest) returns (CreatePartResponse);
+}
+
+// Part без uuid, необходим для Create
+message PartInfo {
+  string name = 1;                            // Название детали
+  string description = 2;                     // Описание детали
+  double price = 3;                           // Цена за единицу
+  int64 stock_quantity = 4;                   // Количество на складе
+  Category category = 5;                      // Категория
+  Dimensions dimensions = 6;                  // Размеры детали
+  Manufacturer manufacturer = 7;              // Информация о производителе
+  repeated string tags = 8;                   // Теги для быстрого поиска
+  map<string, Value> metadata = 9;            // Гибкие метаданные
+}
+
+// Part содержит в себе информацию о детали
+message Part {
+  string uuid = 1;  // Идентификатор детали
+  PartInfo info = 2; // Информация о детали
+  google.protobuf.Timestamp created_at = 3;  // Дата создания
+  google.protobuf.Timestamp updated_at = 4;  // Дата обновления
+}
+
+// Dimensions для описания размеров детали
+message Dimensions {
+  double length = 1; // Длина в см
+  double width = 2;  // Ширина в см
+  double height = 3; // Высота в см
+  double weight = 4; // Вес в кг
+}
+
+// Manufacturer для описания производителя
+message Manufacturer {
+  string name = 1;    // Название
+  string country = 2; // Страна производителя
+  string website = 3; // Сайт производителя
+}
+
+// Value необходим для метаданных
+message Value {
+  string string_value = 1;
+  int64 int64_value = 2;
+  double double_value = 3;
+  bool bool_value = 4;
+}
+
+// PartsFilter нужен для поиска деталей по фильтру
+message PartsFilter {
+  repeated string uuids = 1;
+  repeated string names = 2;
+  repeated Category categories = 3;
+  repeated string manufacturer_countries = 4;
+  repeated string tags = 5;
+}
+
+// Category описывает виды деталей
+enum Category {
+  CATEGORY_UNKNOWN_UNSPECIFIED  = 0; // Неизвестная категория
+  CATEGORY_ENGINE               = 1; // Двигатель
+  CATEGORY_FUEL                 = 2; // Топливо
+  CATEGORY_PORTHOLE             = 3; // Иллюминатор
+  CATEGORY_WING                 = 4; // Крыло
+  // buf:lint:ignore ENUM_VALUE_PREFIX
+  // buf:lint:ignore ENUM_ZERO_VALUE_SUFFIX
+  //UNKNOWN  = 0; // Неизвестная категория
+  //ENGINE               = 1; // Двигатель
+  //FUEL                 = 2; // Топливо
+  //PORTHOLE             = 3; // Иллюминатор
+  //WING                 = 4; // Крыло
+}
+
+// Запрос для получения информации о детали по ее uuid
+message GetPartRequest {
+  string uuid = 1;        // Идентификатор детали
+}
+
+// Ответ, содержащий иформацию о детали по ее uuid
+message GetPartResponse {
+  Part part = 1;          // Информация о детали
+}
+
+// Запрос для получения информации о деталях с указанными параметрами
+message ListPartsRequest {
+  PartsFilter filter = 1; // Фильтр по деталям
+}
+
+// Ответ, содержащий информацию о деталях с указанными параметрами
+message ListPartsResponse {
+  repeated Part parts = 1;      // Список найденных деталей
+}
+
+// Запрос на создание детали
+message CreatePartRequest {
+  PartInfo info = 1; // Информация о детали
+}
+
+// Ответ на создание детали
+message CreatePartResponse {
+  string uuid = 1; // Идентификатор созданной детали
+}

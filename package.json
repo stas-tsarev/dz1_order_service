@@ -1,0 +1,7 @@
+{
+  "name": "dz1_order_service",
+  "private": true,
+  "dependencies": {
+    "@redocly/cli": "^1.34.3"
+  }
+}

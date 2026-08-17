@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package payment.v1;
+
+option go_package = "https://github.com/stas-tsarev/dz1_order_service/pkg/proto/payment/v1;payment_v1";
+
+service PaymentService {
+  rpc PayOrder(PayOrderRequest) returns (PayOrderResponse);
+}
+
+// Перечисление PaymentMethod содержит способы оплаты
+enum PaymentMethod {
+  PAYMENT_METHOD_UNKNOWN_UNSPECIFIED = 0; // Неизвестный способ
+  PAYMENT_METHOD_CARD                = 1; // Банковская карта
+  PAYMENT_METHOD_SBP                 = 2; // Система быстрых платежей
+  PAYMENT_METHOD_CREDIT_CARD         = 3; // Кредитная карта
+  PAYMENT_METHOD_INVESTOR_MONEY      = 4; // Деньги инвестора (внутренний метод)
+}
+
+// Pay содержит информацию о платеже
+message Pay {
+  string order_uuid = 1;            // Идентификатор заказа
+  string user_uuid = 2;             // Идентификатор пользователя
+  PaymentMethod payment_method = 3; // Выбранный способ оплаты
+}
+
+// Запрос на оплату
+message PayOrderRequest {
+  Pay pay = 1; // Информация о платеже
+}
+
+// Ответ на оплату
+message PayOrderResponse {
+  string transaction_uuid = 1; // Идентификатор транзакции оплаты
+}

@@ -1,0 +1,27 @@
+parameters:
+  - $ref: ../params/order_uuid.yaml
+
+post:
+  summary: Pay order by UUID
+  operationId: PayOrder
+  tags:
+    - Order
+  requestBody:
+    description: Pay order
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/pay_order_request.yaml
+  responses:
+    '404':
+      description: The order don't find
+      content:
+        application/json:
+          schema:
+            $ref: ../components/errors/404_not_found.yaml
+    '200':
+      description: Order has been successfully payed
+      content:
+        application/json:
+          schema:
+            $ref: ../components/responses/pay_order_response.yaml

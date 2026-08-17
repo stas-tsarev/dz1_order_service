@@ -1,0 +1,29 @@
+parameters:
+  - $ref: ../params/order_uuid.yaml
+
+post:
+  summary: Cancel order by UUID
+  operationId: CancelOrder
+  tags:
+    - Order
+  requestBody:
+    description: Cancel order
+    content:
+      application/json:
+        schema:
+          $ref: ../components/requests/delete_order_request.yaml
+  responses:
+    '404':
+      description: The order don't find
+      content:
+        application/json:
+          schema:
+            $ref: ../components/errors/404_not_found.yaml
+    '204':
+      description: Order has been successfully canceled
+    '409':
+      description: Order has already been paid for and cannot be cancelled
+      content:
+        application/json:
+          schema:
+            $ref: ../components/errors/409_conflict.yaml

@@ -1,0 +1,7 @@
+type: string
+description: Payment Method
+enum:
+  - PENDING_PAYMENT
+  - PAID
+  - CANCELED
+example: "PENDING_PAYMENT"
