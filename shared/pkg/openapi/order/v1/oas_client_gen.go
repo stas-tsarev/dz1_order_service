@@ -33,7 +33,7 @@ type Invoker interface {
 	// Cancel order by UUID.
 	//
 	// POST /api/v1/orders/{order_uuid}/cancel
-	CancelOrder(ctx context.Context, request OptDeleteOrderRequest, params CancelOrderParams) (CancelOrderRes, error)
+	CancelOrder(ctx context.Context, params CancelOrderParams) (CancelOrderRes, error)
 	// CreateOrder invokes CreateOrder operation.
 	//
 	// Create new order.
@@ -102,12 +102,12 @@ func (c *Client) requestURL(ctx context.Context) *url.URL {
 // Cancel order by UUID.
 //
 // POST /api/v1/orders/{order_uuid}/cancel
-func (c *Client) CancelOrder(ctx context.Context, request OptDeleteOrderRequest, params CancelOrderParams) (CancelOrderRes, error) {
-	res, err := c.sendCancelOrder(ctx, request, params)
+func (c *Client) CancelOrder(ctx context.Context, params CancelOrderParams) (CancelOrderRes, error) {
+	res, err := c.sendCancelOrder(ctx, params)
 	return res, err
 }
 
-func (c *Client) sendCancelOrder(ctx context.Context, request OptDeleteOrderRequest, params CancelOrderParams) (res CancelOrderRes, err error) {
+func (c *Client) sendCancelOrder(ctx context.Context, params CancelOrderParams) (res CancelOrderRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("CancelOrder"),
 		semconv.HTTPRequestMethodKey.String("POST"),
@@ -170,9 +170,6 @@ func (c *Client) sendCancelOrder(ctx context.Context, request OptDeleteOrderRequ
 	r, err := ht.NewRequest(ctx, "POST", u)
 	if err != nil {
 		return res, errors.Wrap(err, "create request")
-	}
-	if err := encodeCancelOrderRequest(request, r); err != nil {
-		return res, errors.Wrap(err, "encode request")
 	}
 
 	stage = "SendRequest"

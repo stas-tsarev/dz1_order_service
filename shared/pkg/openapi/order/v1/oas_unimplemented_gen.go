@@ -18,7 +18,7 @@ var _ Handler = UnimplementedHandler{}
 // Cancel order by UUID.
 //
 // POST /api/v1/orders/{order_uuid}/cancel
-func (UnimplementedHandler) CancelOrder(ctx context.Context, req OptDeleteOrderRequest, params CancelOrderParams) (r CancelOrderRes, _ error) {
+func (UnimplementedHandler) CancelOrder(ctx context.Context, params CancelOrderParams) (r CancelOrderRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

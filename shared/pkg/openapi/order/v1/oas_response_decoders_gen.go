@@ -9,8 +9,11 @@ import (
 
 	"github.com/go-faster/errors"
 	"github.com/go-faster/jx"
+	"github.com/google/uuid"
 
+	"github.com/ogen-go/ogen/conv"
 	"github.com/ogen-go/ogen/ogenerrors"
+	"github.com/ogen-go/ogen/uri"
 	"github.com/ogen-go/ogen/validate"
 )
 
@@ -18,7 +21,46 @@ func decodeCancelOrderResponse(resp *http.Response) (res CancelOrderRes, _ error
 	switch resp.StatusCode {
 	case 204:
 		// Code 204.
-		return &CancelOrderNoContent{}, nil
+		var wrapper CancelOrderNoContent
+		h := uri.NewHeaderDecoder(resp.Header)
+		// Parse "X-Request-ID" header.
+		{
+			cfg := uri.HeaderParameterDecodingConfig{
+				Name:    "X-Request-ID",
+				Explode: false,
+			}
+			if err := func() error {
+				if err := h.HasParam(cfg); err == nil {
+					if err := h.DecodeParam(cfg, func(d uri.Decoder) error {
+						var wrapperDotXRequestIDVal uuid.UUID
+						if err := func() error {
+							val, err := d.DecodeValue()
+							if err != nil {
+								return err
+							}
+
+							c, err := conv.ToUUID(val)
+							if err != nil {
+								return err
+							}
+
+							wrapperDotXRequestIDVal = c
+							return nil
+						}(); err != nil {
+							return err
+						}
+						wrapper.XRequestID.SetTo(wrapperDotXRequestIDVal)
+						return nil
+					}); err != nil {
+						return err
+					}
+				}
+				return nil
+			}(); err != nil {
+				return res, errors.Wrap(err, "parse X-Request-ID header")
+			}
+		}
+		return &wrapper, nil
 	case 404:
 		// Code 404.
 		ct, _, err := mime.ParseMediaType(resp.Header.Get("Content-Type"))
@@ -194,7 +236,7 @@ func decodeGetOrderResponse(resp *http.Response) (res GetOrderRes, _ error) {
 			}
 			d := jx.DecodeBytes(buf)
 
-			var response GetOrderResponse
+			var response Order
 			if err := func() error {
 				if err := response.Decode(d); err != nil {
 					return err

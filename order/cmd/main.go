@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-	"strings"
 	"sync"
 	"syscall"
 	"time"
@@ -60,21 +59,56 @@ func NewOrderHandler(storage *OrderStorage, clients *Clients) *OrderHandler {
 	}
 }
 
-func (h *OrderHandler) CancelOrder(_ context.Context, req order_v1.OptDeleteOrderRequest, params order_v1.CancelOrderParams) (order_v1.CancelOrderRes, error) {
-	return nil, nil
+func (h *OrderHandler) CancelOrder(_ context.Context, params order_v1.CancelOrderParams) (order_v1.CancelOrderRes, error) {
+	h.storage.mu.Lock()
+	defer h.storage.mu.Unlock()
+
+	order := h.storage.order[params.OrderUUID.String()]
+	if order == nil {
+		err := errors.New("Order not found")
+		log.Println("CancelOrder: ", err)
+		return &order_v1.R404NotFound{
+			Code:    404,
+			Message: err.Error(),
+		}, nil
+	}
+
+	if order.Status == order_v1.OrderStatusPAID {
+		err := errors.New("Cannot cancel order because it is paid")
+		log.Println("CancelOrder: ", err)
+		return &order_v1.R409Conflict{
+			Code:    409,
+			Message: err.Error(),
+		}, nil
+	}
+
+	canceledOrder := &order_v1.Order{
+		OrderUUID:     order.OrderUUID,
+		UserUUID:      order.UserUUID,
+		PartUuids:     order.PartUuids,
+		TotalPrice:    order.TotalPrice,
+		PaymentMethod: order.PaymentMethod,
+		Status:        order_v1.OrderStatusCANCELED,
+	}
+
+	h.storage.order[params.OrderUUID.String()] = canceledOrder
+
+	return &order_v1.CancelOrderNoContent{}, nil
 }
 
-// TODO эту хуйню полностью надо переделать, еще обратить внимание на price, который float32, когда в inventory он float64
 func (h *OrderHandler) CreateOrder(_ context.Context, req order_v1.OptCreateOrderRequest) (order_v1.CreateOrderRes, error) {
 	h.storage.mu.Lock()
 	defer h.storage.mu.Unlock()
 
 	request := req.Value
 
+	// Сохраняем детали для поиска в отдельную переменную
 	partsUUIDs := make([]string, 0, 0)
 	for _, part := range request.PartUuids {
 		partsUUIDs = append(partsUUIDs, part.String())
 	}
+
+	// Создаем запрос для поиска деталей в inventory
 	listPartReq := &inventory_v1.ListPartsRequest{
 		Filter: &inventory_v1.PartsFilter{
 			Uuids:                 partsUUIDs,
@@ -85,10 +119,22 @@ func (h *OrderHandler) CreateOrder(_ context.Context, req order_v1.OptCreateOrde
 		},
 	}
 
-	listPartResp, err := h.clients.clientInv.ListParts(context.Background(), listPartReq)
-	if err != nil {
-		log.Println(err)
-		return nil, err
+	listPartResp, _ := h.clients.clientInv.ListParts(context.Background(), listPartReq)
+	if listPartResp == nil {
+		err := errors.New("Parts not found in inventory")
+		log.Println("CreateOrder: ", err)
+		return &order_v1.R422UnprocessableEntity{
+			Code:    422,
+			Message: err.Error(),
+		}, nil
+	}
+	if len(listPartResp.Parts) != len(partsUUIDs) {
+		err := errors.New("Some parts not found in inventory")
+		log.Println("CreateOrder: ", err)
+		return &order_v1.R422UnprocessableEntity{
+			Code:    422,
+			Message: err.Error(),
+		}, nil
 	}
 
 	foundParts := make(map[string]bool)
@@ -96,20 +142,9 @@ func (h *OrderHandler) CreateOrder(_ context.Context, req order_v1.OptCreateOrde
 		foundParts[part.Uuid] = true
 	}
 
-	var missingParts []string
-	for _, part := range request.PartUuids {
-		if !foundParts[part.String()] {
-			missingParts = append(missingParts, part.String())
-		}
-	}
-
-	if len(missingParts) > 0 {
-		return nil, errors.New(strings.Join(missingParts, ","))
-	}
-
-	var totalPrice float32
+	var totalPrice float64
 	for _, part := range listPartResp.Parts {
-		totalPrice += float32(part.Info.Price)
+		totalPrice += part.Info.Price
 	}
 
 	orderUuid := uuid.New()
@@ -119,24 +154,104 @@ func (h *OrderHandler) CreateOrder(_ context.Context, req order_v1.OptCreateOrde
 		UserUUID:   request.UserUUID,
 		PartUuids:  request.PartUuids,
 		TotalPrice: totalPrice,
-		Status:     "PENDIND_PAYMENT",
+		Status:     order_v1.OrderStatusPENDINGPAYMENT,
 	}
 
 	h.storage.order[orderUuid.String()] = order
 	log.Printf("Order %s created", orderUuid.String())
 
 	return &order_v1.CreateOrderResponse{
-		orderUuid,
-		totalPrice,
+		OrderUUID:  orderUuid,
+		TotalPrice: totalPrice,
 	}, nil
 }
 
 func (h *OrderHandler) GetOrder(_ context.Context, params order_v1.GetOrderParams) (order_v1.GetOrderRes, error) {
-	return nil, nil
+	h.storage.mu.Lock()
+	defer h.storage.mu.Unlock()
+
+	order := h.storage.order[params.OrderUUID.String()]
+	if order == nil {
+		err := errors.New("Order not found")
+		log.Println("GetOrder: ", err)
+		return &order_v1.R404NotFound{
+			Code:    404,
+			Message: err.Error(),
+		}, nil
+	}
+
+	return &order_v1.Order{
+		OrderUUID:       order.OrderUUID,
+		UserUUID:        order.UserUUID,
+		PartUuids:       order.PartUuids,
+		TotalPrice:      order.TotalPrice,
+		TransactionUUID: order.TransactionUUID,
+		PaymentMethod:   order.PaymentMethod,
+		Status:          order.Status,
+	}, nil
+}
+
+// Функция переводит order.PaymentMethod в payment.PaymentMethod
+func GetPaymentMethod(method order_v1.PaymentMethod) payment_v1.PaymentMethod {
+	switch method {
+	case order_v1.PaymentMethodUNKNOWN:
+		return payment_v1.PaymentMethod_PAYMENT_METHOD_UNKNOWN_UNSPECIFIED
+	case order_v1.PaymentMethodCARD:
+		return payment_v1.PaymentMethod_PAYMENT_METHOD_CARD
+	case order_v1.PaymentMethodSBP:
+		return payment_v1.PaymentMethod_PAYMENT_METHOD_SBP
+	case order_v1.PaymentMethodCREDITCARD:
+		return payment_v1.PaymentMethod_PAYMENT_METHOD_CREDIT_CARD
+	case order_v1.PaymentMethodINVESTORMONEY:
+		return payment_v1.PaymentMethod_PAYMENT_METHOD_INVESTOR_MONEY
+	}
+	return payment_v1.PaymentMethod_PAYMENT_METHOD_UNKNOWN_UNSPECIFIED
 }
 
 func (h *OrderHandler) PayOrder(_ context.Context, req order_v1.OptPayOrderRequest, params order_v1.PayOrderParams) (order_v1.PayOrderRes, error) {
-	return nil, nil
+	h.storage.mu.Lock()
+	defer h.storage.mu.Unlock()
+
+	order := h.storage.order[params.OrderUUID.String()]
+	if order == nil {
+		err := errors.New("Order not found")
+		log.Println("PayOrder: ", err)
+		return &order_v1.R404NotFound{
+			Code:    404,
+			Message: err.Error(),
+		}, nil
+	}
+
+	payOrder := &payment_v1.PayOrderRequest{
+		Pay: &payment_v1.Pay{
+			OrderUuid:     order.OrderUUID.String(),
+			UserUuid:      order.UserUUID.String(),
+			PaymentMethod: GetPaymentMethod(req.Value.PaymentMethod),
+		},
+	}
+
+	payment, _ := h.clients.clientPay.PayOrder(context.Background(), payOrder)
+	transactionUuid, _ := uuid.Parse(payment.TransactionUuid)
+
+	updatedOrder := &order_v1.Order{
+		OrderUUID:  order.OrderUUID,
+		UserUUID:   order.UserUUID,
+		PartUuids:  order.PartUuids,
+		TotalPrice: order.TotalPrice,
+		TransactionUUID: order_v1.NilUUID{
+			Value: transactionUuid,
+			Null:  false,
+		},
+		Status:        order_v1.OrderStatusPAID,
+		PaymentMethod: req.Value.PaymentMethod,
+	}
+
+	log.Printf("Order %s payed", updatedOrder.OrderUUID)
+	h.storage.order[params.OrderUUID.String()] = updatedOrder
+
+	return &order_v1.PayOrderResponse{
+		TransactionUUID: transactionUuid,
+	}, nil
 }
 
 func main() {

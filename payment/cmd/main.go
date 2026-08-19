@@ -35,7 +35,7 @@ func (s *PaymentService) PayOrder(_ context.Context, req *payment_v1.PayOrderReq
 
 	newUUID := uuid.NewString()
 
-	log.Printf("Create part with uuid: %s", newUUID)
+	log.Printf("Create payment with uuid: %s", newUUID)
 
 	return &payment_v1.PayOrderResponse{
 		TransactionUuid: newUUID,

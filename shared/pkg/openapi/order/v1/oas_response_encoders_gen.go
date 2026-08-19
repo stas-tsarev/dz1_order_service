@@ -9,11 +9,33 @@ import (
 	"github.com/go-faster/jx"
 	"go.opentelemetry.io/otel/codes"
 	"go.opentelemetry.io/otel/trace"
+
+	"github.com/ogen-go/ogen/conv"
+	"github.com/ogen-go/ogen/uri"
 )
 
 func encodeCancelOrderResponse(response CancelOrderRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
 	case *CancelOrderNoContent:
+		// Encoding response headers.
+		{
+			h := uri.NewHeaderEncoder(w.Header())
+			// Encode "X-Request-ID" header.
+			{
+				cfg := uri.HeaderParameterEncodingConfig{
+					Name:    "X-Request-ID",
+					Explode: false,
+				}
+				if err := h.EncodeParam(cfg, func(e uri.Encoder) error {
+					if val, ok := response.XRequestID.Get(); ok {
+						return e.EncodeValue(conv.UUIDToString(val))
+					}
+					return nil
+				}); err != nil {
+					return errors.Wrap(err, "encode X-Request-ID header")
+				}
+			}
+		}
 		w.WriteHeader(204)
 		span.SetStatus(codes.Ok, http.StatusText(204))
 
@@ -85,7 +107,7 @@ func encodeCreateOrderResponse(response CreateOrderRes, w http.ResponseWriter, s
 
 func encodeGetOrderResponse(response GetOrderRes, w http.ResponseWriter, span trace.Span) error {
 	switch response := response.(type) {
-	case *GetOrderResponse:
+	case *Order:
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(200)
 		span.SetStatus(codes.Ok, http.StatusText(200))

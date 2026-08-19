@@ -13,7 +13,7 @@ type Handler interface {
 	// Cancel order by UUID.
 	//
 	// POST /api/v1/orders/{order_uuid}/cancel
-	CancelOrder(ctx context.Context, req OptDeleteOrderRequest, params CancelOrderParams) (CancelOrderRes, error)
+	CancelOrder(ctx context.Context, params CancelOrderParams) (CancelOrderRes, error)
 	// CreateOrder implements CreateOrder operation.
 	//
 	// Create new order.

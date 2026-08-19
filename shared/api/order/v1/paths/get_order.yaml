@@ -18,4 +18,4 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../components/responses/get_order_response.yaml
+            $ref: ../components/order.yaml

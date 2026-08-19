@@ -63,29 +63,6 @@ func (s *CreateOrderResponse) Validate() error {
 	return nil
 }
 
-func (s *GetOrderResponse) Validate() error {
-	if s == nil {
-		return validate.ErrNilPointer
-	}
-
-	var failures []validate.FieldError
-	if err := func() error {
-		if err := s.PaymentMethod.Validate(); err != nil {
-			return err
-		}
-		return nil
-	}(); err != nil {
-		failures = append(failures, validate.FieldError{
-			Name:  "payment_method",
-			Error: err,
-		})
-	}
-	if len(failures) > 0 {
-		return &validate.Error{Fields: failures}
-	}
-	return nil
-}
-
 func (s *Order) Validate() error {
 	if s == nil {
 		return validate.ErrNilPointer

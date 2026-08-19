@@ -8,7 +8,19 @@ import (
 )
 
 // CancelOrderNoContent is response for CancelOrder operation.
-type CancelOrderNoContent struct{}
+type CancelOrderNoContent struct {
+	XRequestID OptUUID
+}
+
+// GetXRequestID returns the value of XRequestID.
+func (s *CancelOrderNoContent) GetXRequestID() OptUUID {
+	return s.XRequestID
+}
+
+// SetXRequestID sets the value of XRequestID.
+func (s *CancelOrderNoContent) SetXRequestID(val OptUUID) {
+	s.XRequestID = val
+}
 
 func (*CancelOrderNoContent) cancelOrderRes() {}
 
@@ -45,7 +57,7 @@ type CreateOrderResponse struct {
 	// UUID созданного заказа.
 	OrderUUID uuid.UUID `json:"order_uuid"`
 	// Общая стоимость заказа.
-	TotalPrice float32 `json:"total_price"`
+	TotalPrice float64 `json:"total_price"`
 }
 
 // GetOrderUUID returns the value of OrderUUID.
@@ -54,7 +66,7 @@ func (s *CreateOrderResponse) GetOrderUUID() uuid.UUID {
 }
 
 // GetTotalPrice returns the value of TotalPrice.
-func (s *CreateOrderResponse) GetTotalPrice() float32 {
+func (s *CreateOrderResponse) GetTotalPrice() float64 {
 	return s.TotalPrice
 }
 
@@ -64,44 +76,11 @@ func (s *CreateOrderResponse) SetOrderUUID(val uuid.UUID) {
 }
 
 // SetTotalPrice sets the value of TotalPrice.
-func (s *CreateOrderResponse) SetTotalPrice(val float32) {
+func (s *CreateOrderResponse) SetTotalPrice(val float64) {
 	s.TotalPrice = val
 }
 
 func (*CreateOrderResponse) createOrderRes() {}
-
-// Ref: #/components/schemas/delete_order_request
-type DeleteOrderRequest struct {
-	// UUID отменяемого заказа.
-	OrderUUID uuid.UUID `json:"order_uuid"`
-}
-
-// GetOrderUUID returns the value of OrderUUID.
-func (s *DeleteOrderRequest) GetOrderUUID() uuid.UUID {
-	return s.OrderUUID
-}
-
-// SetOrderUUID sets the value of OrderUUID.
-func (s *DeleteOrderRequest) SetOrderUUID(val uuid.UUID) {
-	s.OrderUUID = val
-}
-
-// Ref: #/components/schemas/get_order_response
-type GetOrderResponse struct {
-	PaymentMethod Order `json:"payment_method"`
-}
-
-// GetPaymentMethod returns the value of PaymentMethod.
-func (s *GetOrderResponse) GetPaymentMethod() Order {
-	return s.PaymentMethod
-}
-
-// SetPaymentMethod sets the value of PaymentMethod.
-func (s *GetOrderResponse) SetPaymentMethod(val Order) {
-	s.PaymentMethod = val
-}
-
-func (*GetOrderResponse) getOrderRes() {}
 
 // NewNilUUID returns new NilUUID with value set to v.
 func NewNilUUID(v uuid.UUID) NilUUID {
@@ -194,52 +173,6 @@ func (o OptCreateOrderRequest) Or(d CreateOrderRequest) CreateOrderRequest {
 	return d
 }
 
-// NewOptDeleteOrderRequest returns new OptDeleteOrderRequest with value set to v.
-func NewOptDeleteOrderRequest(v DeleteOrderRequest) OptDeleteOrderRequest {
-	return OptDeleteOrderRequest{
-		Value: v,
-		Set:   true,
-	}
-}
-
-// OptDeleteOrderRequest is optional DeleteOrderRequest.
-type OptDeleteOrderRequest struct {
-	Value DeleteOrderRequest
-	Set   bool
-}
-
-// IsSet returns true if OptDeleteOrderRequest was set.
-func (o OptDeleteOrderRequest) IsSet() bool { return o.Set }
-
-// Reset unsets value.
-func (o *OptDeleteOrderRequest) Reset() {
-	var v DeleteOrderRequest
-	o.Value = v
-	o.Set = false
-}
-
-// SetTo sets value to v.
-func (o *OptDeleteOrderRequest) SetTo(v DeleteOrderRequest) {
-	o.Set = true
-	o.Value = v
-}
-
-// Get returns value and boolean that denotes whether value was set.
-func (o OptDeleteOrderRequest) Get() (v DeleteOrderRequest, ok bool) {
-	if !o.Set {
-		return v, false
-	}
-	return o.Value, true
-}
-
-// Or returns value if set, or given parameter if does not.
-func (o OptDeleteOrderRequest) Or(d DeleteOrderRequest) DeleteOrderRequest {
-	if v, ok := o.Get(); ok {
-		return v
-	}
-	return d
-}
-
 // NewOptPayOrderRequest returns new OptPayOrderRequest with value set to v.
 func NewOptPayOrderRequest(v PayOrderRequest) OptPayOrderRequest {
 	return OptPayOrderRequest{
@@ -286,6 +219,52 @@ func (o OptPayOrderRequest) Or(d PayOrderRequest) PayOrderRequest {
 	return d
 }
 
+// NewOptUUID returns new OptUUID with value set to v.
+func NewOptUUID(v uuid.UUID) OptUUID {
+	return OptUUID{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptUUID is optional uuid.UUID.
+type OptUUID struct {
+	Value uuid.UUID
+	Set   bool
+}
+
+// IsSet returns true if OptUUID was set.
+func (o OptUUID) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptUUID) Reset() {
+	var v uuid.UUID
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptUUID) SetTo(v uuid.UUID) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptUUID) Get() (v uuid.UUID, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptUUID) Or(d uuid.UUID) uuid.UUID {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // Ref: #/components/schemas/order
 type Order struct {
 	// UUID заказа.
@@ -295,7 +274,7 @@ type Order struct {
 	// UUID деталей для заказа.
 	PartUuids []uuid.UUID `json:"part_uuids"`
 	// Общая стоимость заказа.
-	TotalPrice float32 `json:"total_price"`
+	TotalPrice float64 `json:"total_price"`
 	// UUID транзакции (если оплачен).
 	TransactionUUID NilUUID `json:"transaction_uuid"`
 	// Способ оплаты (если оплачен).
@@ -320,7 +299,7 @@ func (s *Order) GetPartUuids() []uuid.UUID {
 }
 
 // GetTotalPrice returns the value of TotalPrice.
-func (s *Order) GetTotalPrice() float32 {
+func (s *Order) GetTotalPrice() float64 {
 	return s.TotalPrice
 }
 
@@ -355,7 +334,7 @@ func (s *Order) SetPartUuids(val []uuid.UUID) {
 }
 
 // SetTotalPrice sets the value of TotalPrice.
-func (s *Order) SetTotalPrice(val float32) {
+func (s *Order) SetTotalPrice(val float64) {
 	s.TotalPrice = val
 }
 
@@ -373,6 +352,8 @@ func (s *Order) SetPaymentMethod(val PaymentMethod) {
 func (s *Order) SetStatus(val OrderStatus) {
 	s.Status = val
 }
+
+func (*Order) getOrderRes() {}
 
 // Payment Method.
 // Ref: #/components/schemas/order_status
