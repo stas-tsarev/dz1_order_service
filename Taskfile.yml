@@ -31,7 +31,6 @@ vars:
 
   OPEN_API_FILES: '{{.ROOT_DIR}}/shared/api/bundles'
 
-  MODULES: assembly inventory order payment platform iam notification
 
 tasks:
   install-formatters:
