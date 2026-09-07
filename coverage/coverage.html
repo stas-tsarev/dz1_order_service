@@ -1,0 +1,1173 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>inventory: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/inventory/createPart.go (0.0%)</option>
+				
+				<option value="file1">github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/inventory/getPart.go (0.0%)</option>
+				
+				<option value="file2">github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/inventory/listParts.go (0.0%)</option>
+				
+				<option value="file3">github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/inventory/repository.go (0.0%)</option>
+				
+				<option value="file4">github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/model/inventory.go (40.0%)</option>
+				
+				<option value="file5">github.com/stas-tsarev/dz1_order_service/inventory/internal/service/converter/inventory.go (82.6%)</option>
+				
+				<option value="file6">github.com/stas-tsarev/dz1_order_service/inventory/internal/service/inventory/createPart.go (100.0%)</option>
+				
+				<option value="file7">github.com/stas-tsarev/dz1_order_service/inventory/internal/service/inventory/getPart.go (100.0%)</option>
+				
+				<option value="file8">github.com/stas-tsarev/dz1_order_service/inventory/internal/service/inventory/listParts.go (100.0%)</option>
+				
+				<option value="file9">github.com/stas-tsarev/dz1_order_service/inventory/internal/service/inventory/service.go (100.0%)</option>
+				
+				<option value="file10">github.com/stas-tsarev/dz1_order_service/inventory/internal/service/model/inventory.go (0.0%)</option>
+				
+				<option value="file11">github.com/stas-tsarev/dz1_order_service/order/internal/repository/model/order.go (0.0%)</option>
+				
+				<option value="file12">github.com/stas-tsarev/dz1_order_service/order/internal/repository/order/cancelOrder.go (0.0%)</option>
+				
+				<option value="file13">github.com/stas-tsarev/dz1_order_service/order/internal/repository/order/createOrder.go (0.0%)</option>
+				
+				<option value="file14">github.com/stas-tsarev/dz1_order_service/order/internal/repository/order/getOrder.go (0.0%)</option>
+				
+				<option value="file15">github.com/stas-tsarev/dz1_order_service/order/internal/repository/order/payOrder.go (0.0%)</option>
+				
+				<option value="file16">github.com/stas-tsarev/dz1_order_service/order/internal/repository/order/repository.go (0.0%)</option>
+				
+				<option value="file17">github.com/stas-tsarev/dz1_order_service/order/internal/service/converter/order.go (100.0%)</option>
+				
+				<option value="file18">github.com/stas-tsarev/dz1_order_service/order/internal/service/order/cancelOrder.go (100.0%)</option>
+				
+				<option value="file19">github.com/stas-tsarev/dz1_order_service/order/internal/service/order/createOrder.go (100.0%)</option>
+				
+				<option value="file20">github.com/stas-tsarev/dz1_order_service/order/internal/service/order/getOrder.go (100.0%)</option>
+				
+				<option value="file21">github.com/stas-tsarev/dz1_order_service/order/internal/service/order/payOrder.go (100.0%)</option>
+				
+				<option value="file22">github.com/stas-tsarev/dz1_order_service/order/internal/service/order/service.go (100.0%)</option>
+				
+				<option value="file23">github.com/stas-tsarev/dz1_order_service/payment/internal/service/payment/payOrder.go (100.0%)</option>
+				
+				<option value="file24">github.com/stas-tsarev/dz1_order_service/payment/internal/service/payment/service.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package inventory
+
+import (
+        "context"
+        "time"
+
+        "github.com/google/uuid"
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/model"
+)
+
+func (r *repository) CreatePart(_ context.Context, partInfo model.PartInfo) (string, error) <span class="cov0" title="0">{
+        r.mu.Lock()
+        defer r.mu.Unlock()
+
+        newUUID := uuid.NewString()
+
+        newPart := model.Part{
+                Uuid:      newUUID,
+                Info:      partInfo,
+                CreatedAt: time.Now(),
+                UpdatedAt: time.Now(),
+        }
+
+        r.data[newUUID] = newPart
+
+        return newUUID, nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package inventory
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/model"
+)
+
+func (r *repository) GetPart(_ context.Context, uuid string) (model.Part, error) <span class="cov0" title="0">{
+        r.mu.RLock()
+        defer r.mu.RUnlock()
+
+        repoPart, ok := r.data[uuid]
+        if !ok </span><span class="cov0" title="0">{
+                return model.Part{}, model.ErrorPartNotFound
+        }</span>
+
+        <span class="cov0" title="0">return repoPart, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package inventory
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/model"
+)
+
+func (r *repository) ListParts(_ context.Context, filter *model.PartsFilter) ([]model.Part, error) <span class="cov0" title="0">{
+        r.mu.Lock()
+        defer r.mu.Unlock()
+
+        parts := make([]model.Part, 0, len(r.data))
+        for _, part := range r.data </span><span class="cov0" title="0">{
+                parts = append(parts, part)
+        }</span>
+
+        <span class="cov0" title="0">if filter == nil </span><span class="cov0" title="0">{
+                return parts, nil
+        }</span>
+
+        <span class="cov0" title="0">if filter.Uuids == nil &amp;&amp;
+                filter.Names == nil &amp;&amp;
+                len(filter.Categories) == 0 &amp;&amp;
+                filter.ManufacturerCountries == nil &amp;&amp;
+                filter.Tags == nil </span><span class="cov0" title="0">{
+                return parts, nil
+        }</span>
+
+        <span class="cov0" title="0">if filter.Uuids != nil &amp;&amp; len(parts) != 0 </span><span class="cov0" title="0">{
+                uuidSet := make(map[string]bool, len(filter.Uuids))
+                for _, uuid := range filter.Uuids </span><span class="cov0" title="0">{
+                        uuidSet[uuid] = true
+                }</span>
+                <span class="cov0" title="0">result := make([]model.Part, 0, len(parts))
+                for _, part := range parts </span><span class="cov0" title="0">{
+                        if uuidSet[part.Uuid] </span><span class="cov0" title="0">{
+                                result = append(result, part)
+                        }</span>
+                }
+                <span class="cov0" title="0">parts = result</span>
+        }
+
+        <span class="cov0" title="0">if filter.Names != nil &amp;&amp; len(parts) != 0 </span><span class="cov0" title="0">{
+                nameSet := make(map[string]bool, len(filter.Names))
+                for _, name := range filter.Names </span><span class="cov0" title="0">{
+                        nameSet[name] = true
+                }</span>
+                <span class="cov0" title="0">result := make([]model.Part, 0, len(parts))
+                for _, part := range parts </span><span class="cov0" title="0">{
+                        if nameSet[part.Info.Name] </span><span class="cov0" title="0">{
+                                result = append(result, part)
+                        }</span>
+                }
+                <span class="cov0" title="0">parts = result</span>
+        }
+
+        <span class="cov0" title="0">if len(filter.Categories) != 0 &amp;&amp; len(parts) != 0 </span><span class="cov0" title="0">{
+                categorySet := make(map[string]bool, len(filter.Categories))
+                for _, category := range filter.Categories </span><span class="cov0" title="0">{
+                        categorySet[category.String()] = true
+                }</span>
+                <span class="cov0" title="0">result := make([]model.Part, 0, len(parts))
+                for _, part := range parts </span><span class="cov0" title="0">{
+                        if categorySet[part.Info.Category.String()] </span><span class="cov0" title="0">{
+                                result = append(result, part)
+                        }</span>
+                }
+                <span class="cov0" title="0">parts = result</span>
+        }
+
+        <span class="cov0" title="0">if filter.ManufacturerCountries != nil &amp;&amp; len(parts) != 0 </span><span class="cov0" title="0">{
+                countrySet := make(map[string]bool, len(filter.ManufacturerCountries))
+                for _, country := range filter.ManufacturerCountries </span><span class="cov0" title="0">{
+                        countrySet[country] = true
+                }</span>
+                <span class="cov0" title="0">result := make([]model.Part, 0, len(parts))
+                for _, part := range parts </span><span class="cov0" title="0">{
+                        if countrySet[part.Info.Manufacturer.Country] </span><span class="cov0" title="0">{
+                                result = append(result, part)
+                        }</span>
+                }
+                <span class="cov0" title="0">parts = result</span>
+        }
+
+        <span class="cov0" title="0">if filter.Tags != nil &amp;&amp; len(parts) != 0 </span><span class="cov0" title="0">{
+                tagSet := make(map[string]bool, len(filter.Tags))
+                for _, tag := range filter.Tags </span><span class="cov0" title="0">{
+                        tagSet[tag] = true
+                }</span>
+                <span class="cov0" title="0">result := make([]model.Part, 0, len(parts))
+                for _, part := range parts </span><span class="cov0" title="0">{
+                        for ind := range part.Info.Tags </span><span class="cov0" title="0">{
+                                if tagSet[part.Info.Tags[ind]] </span><span class="cov0" title="0">{
+                                        result = append(result, part)
+                                        break</span>
+                                }
+                        }
+                }
+                <span class="cov0" title="0">parts = result</span>
+        }
+
+        <span class="cov0" title="0">if len(parts) == 0 </span><span class="cov0" title="0">{
+                return []model.Part{}, model.ErrorPartNotFound
+        }</span>
+
+        <span class="cov0" title="0">return parts, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package inventory
+
+import (
+        "sync"
+
+        def "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository"
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/model"
+)
+
+var _ def.InventoryRepository = (*repository)(nil)
+
+type repository struct {
+        mu   sync.RWMutex
+        data map[string]model.Part
+}
+
+func NewRepository() *repository <span class="cov0" title="0">{
+        return &amp;repository{
+                data: make(map[string]model.Part),
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package model
+
+import "time"
+
+// Value - интерфейс для метаданных
+type Value interface {
+        GetValue() interface{}
+        GetType() string
+}
+
+// StringValue - строковое значение
+type StringValue struct {
+        Value string `json:"value"`
+}
+
+func (s StringValue) GetValue() interface{} <span class="cov0" title="0">{
+        return s.Value
+}</span>
+
+func (s StringValue) GetType() string <span class="cov0" title="0">{
+        return "string"
+}</span>
+
+// Int64Value - целочисленное значение
+type Int64Value struct {
+        Value int64 `json:"value"`
+}
+
+func (i Int64Value) GetValue() interface{} <span class="cov0" title="0">{
+        return i.Value
+}</span>
+
+func (i Int64Value) GetType() string <span class="cov0" title="0">{
+        return "int64"
+}</span>
+
+// DoubleValue - дробное значение
+type DoubleValue struct {
+        Value float64 `json:"value"`
+}
+
+func (d DoubleValue) GetValue() interface{} <span class="cov0" title="0">{
+        return d.Value
+}</span>
+
+func (d DoubleValue) GetType() string <span class="cov0" title="0">{
+        return "double"
+}</span>
+
+// BoolValue - логическое значение
+type BoolValue struct {
+        Value bool `json:"value"`
+}
+
+func (b BoolValue) GetValue() interface{} <span class="cov0" title="0">{
+        return b.Value
+}</span>
+
+func (b BoolValue) GetType() string <span class="cov0" title="0">{
+        return "bool"
+}</span>
+
+type Category int
+
+const (
+        CATEGORY_UNKNOWN_UNSPECIFIED Category = iota // Неизвестная категория
+        CATEGORY_ENGINE                              // Двигатель
+        CATEGORY_FUEL                                // Топливо
+        CATEGORY_PORTHOLE                            // Иллюминатор
+        CATEGORY_WING                                // Крыло                 // Деньги инвестора (внутренний метод)
+)
+
+func (i Category) String() string <span class="cov10" title="24">{
+        switch i </span>{
+        case CATEGORY_UNKNOWN_UNSPECIFIED:<span class="cov4" title="4">
+                return "CATEGORY_UNKNOWN_UNSPECIFIED"</span>
+        case CATEGORY_ENGINE:<span class="cov6" title="8">
+                return "CATEGORY_ENGINE"</span>
+        case CATEGORY_FUEL:<span class="cov4" title="4">
+                return "CATEGORY_FUEL"</span>
+        case CATEGORY_PORTHOLE:<span class="cov4" title="4">
+                return "CATEGORY_PORTHOLE"</span>
+        case CATEGORY_WING:<span class="cov4" title="4">
+                return "CATEGORY_WING"</span>
+        }
+        <span class="cov0" title="0">return "CATEGORY_UNKNOWN_UNSPECIFIED"</span>
+}
+
+type Dimensions struct {
+        Length float64
+        Width  float64
+        Height float64
+        Weight float64
+}
+
+type Manufacturer struct {
+        Name    string
+        Country string
+        WebSite string
+}
+
+type PartInfo struct {
+        Name          string // Название детали
+        Description   string
+        Price         float64
+        StockQuantity int64
+        Category      Category
+        Dimensions    Dimensions
+        Manufacturer  Manufacturer
+        Tags          []string
+        Metadata      map[string]Value
+}
+
+// Part содержит в себе информацию о детали
+type Part struct {
+        Uuid      string
+        Info      PartInfo
+        CreatedAt time.Time
+        UpdatedAt time.Time
+}
+
+type PartsFilter struct {
+        Uuids                 []string
+        Names                 []string
+        Categories            []Category
+        ManufacturerCountries []string
+        Tags                  []string
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package converter
+
+import (
+        repoModel "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository/model"
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/model"
+)
+
+/*
+        repo -&gt; service
+*/
+
+func RepoCategoryToServiceCategory(repoCategory repoModel.Category) model.Category <span class="cov7" title="6">{
+        return model.Category(repoCategory)
+}</span>
+
+func RepoDimensionsToServiceDimensions(repoDimensions repoModel.Dimensions) model.Dimensions <span class="cov7" title="6">{
+        return model.Dimensions(repoDimensions)
+}</span>
+
+func RepoManufacturerToServiceManufacturer(repoManufacturer repoModel.Manufacturer) model.Manufacturer <span class="cov7" title="6">{
+        return model.Manufacturer(repoManufacturer)
+}</span>
+
+func RepoValueToServiceValue(repoValue repoModel.Value) model.Value <span class="cov0" title="0">{
+        return model.Value(repoValue)
+}</span>
+
+func RepoMetadataToServiceMetadata(metadata map[string]repoModel.Value) map[string]model.Value <span class="cov7" title="6">{
+        newMetadata := make(map[string]model.Value)
+        for key, value := range metadata </span><span class="cov0" title="0">{
+                newMetadata[key] = RepoValueToServiceValue(value)
+        }</span>
+
+        <span class="cov7" title="6">return newMetadata</span>
+}
+
+func RepoPartInfoToServicePartInfo(repoPartInfo repoModel.PartInfo) model.PartInfo <span class="cov7" title="6">{
+        return model.PartInfo{
+                Name:          repoPartInfo.Name,
+                Description:   repoPartInfo.Description,
+                Price:         repoPartInfo.Price,
+                StockQuantity: repoPartInfo.StockQuantity,
+                Category:      RepoCategoryToServiceCategory(repoPartInfo.Category),
+                Dimensions:    RepoDimensionsToServiceDimensions(repoPartInfo.Dimensions),
+                Manufacturer:  RepoManufacturerToServiceManufacturer(repoPartInfo.Manufacturer),
+                Tags:          repoPartInfo.Tags,
+                Metadata:      RepoMetadataToServiceMetadata(repoPartInfo.Metadata),
+        }
+}</span>
+
+func RepoPartToServicePart(repoPart repoModel.Part) model.Part <span class="cov7" title="6">{
+        return model.Part{
+                Uuid:      repoPart.Uuid,
+                Info:      RepoPartInfoToServicePartInfo(repoPart.Info),
+                CreatedAt: repoPart.CreatedAt,
+                UpdatedAt: repoPart.UpdatedAt,
+        }
+}</span>
+
+/*
+        service -&gt; repo
+*/
+
+func ServiceCategoryToRepoCategory(serviceCategory model.Category) repoModel.Category <span class="cov10" title="12">{
+        return repoModel.Category(serviceCategory)
+}</span>
+
+func ServiceDimensionsToRepoDimensions(serviceDimensions model.Dimensions) repoModel.Dimensions <span class="cov6" title="4">{
+        return repoModel.Dimensions(serviceDimensions)
+}</span>
+
+func ServiceManufacturerToRepoManufacturer(serviceManufacturer model.Manufacturer) repoModel.Manufacturer <span class="cov6" title="4">{
+        return repoModel.Manufacturer(serviceManufacturer)
+}</span>
+
+func ServiceValueToRepoValue(serviceValue model.Value) repoModel.Value <span class="cov0" title="0">{
+        return repoModel.Value(serviceValue)
+}</span>
+
+func ServiceMetadataToRepoMetadata(metadata map[string]model.Value) map[string]repoModel.Value <span class="cov6" title="4">{
+        newMetadata := make(map[string]repoModel.Value)
+        for key, value := range metadata </span><span class="cov0" title="0">{
+                newMetadata[key] = ServiceValueToRepoValue(value)
+        }</span>
+
+        <span class="cov6" title="4">return newMetadata</span>
+}
+
+func ServicePartInfoToRepoPartInfo(servicePart model.PartInfo) repoModel.PartInfo <span class="cov6" title="4">{
+        return repoModel.PartInfo{
+                Name:          servicePart.Name,
+                Description:   servicePart.Description,
+                Price:         servicePart.Price,
+                StockQuantity: servicePart.StockQuantity,
+                Category:      ServiceCategoryToRepoCategory(servicePart.Category),
+                Dimensions:    ServiceDimensionsToRepoDimensions(servicePart.Dimensions),
+                Manufacturer:  ServiceManufacturerToRepoManufacturer(servicePart.Manufacturer),
+                Tags:          servicePart.Tags,
+                Metadata:      ServiceMetadataToRepoMetadata(servicePart.Metadata),
+        }
+}</span>
+
+func ServiceFilterToRepoFilter(serviceFilter *model.PartsFilter) *repoModel.PartsFilter <span class="cov6" title="4">{
+        newCategories := make([]repoModel.Category, 0)
+        for _, category := range serviceFilter.Categories </span><span class="cov8" title="8">{
+                newCategories = append(newCategories, ServiceCategoryToRepoCategory(category))
+        }</span>
+
+        <span class="cov6" title="4">return &amp;repoModel.PartsFilter{
+                Uuids:                 serviceFilter.Uuids,
+                Names:                 serviceFilter.Names,
+                Categories:            newCategories,
+                ManufacturerCountries: serviceFilter.ManufacturerCountries,
+                Tags:                  serviceFilter.Tags,
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package inventory
+
+import (
+        "context"
+        "log"
+
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/converter"
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/model"
+)
+
+func (s *service) CreatePart(ctx context.Context, partInfo model.PartInfo) (string, error) <span class="cov10" title="2">{
+        newUuid, err := s.inventoryRepo.CreatePart(ctx, converter.ServicePartInfoToRepoPartInfo(partInfo))
+        if err != nil </span><span class="cov1" title="1">{
+                log.Printf("CreatePart error: %s", err)
+                return "", err
+        }</span>
+
+        <span class="cov1" title="1">log.Printf("CreatePart newUuid: %s", newUuid)
+        return newUuid, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package inventory
+
+import (
+        "context"
+        "log"
+
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/converter"
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/model"
+)
+
+func (s *service) GetPart(ctx context.Context, id string) (model.Part, error) <span class="cov10" title="2">{
+        part, err := s.inventoryRepo.GetPart(ctx, id)
+        if err != nil </span><span class="cov1" title="1">{
+                log.Printf("GetPart error: %s", err)
+                return model.Part{}, err
+        }</span>
+
+        <span class="cov1" title="1">log.Printf("GetPart: %v", part.Uuid)
+        return converter.RepoPartToServicePart(part), nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package inventory
+
+import (
+        "context"
+        "log"
+
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/converter"
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/service/model"
+)
+
+func (s *service) ListParts(ctx context.Context, filter *model.PartsFilter) ([]model.Part, error) <span class="cov10" title="2">{
+        parts, err := s.inventoryRepo.ListParts(ctx, converter.ServiceFilterToRepoFilter(filter))
+        if err != nil </span><span class="cov1" title="1">{
+                log.Printf("ListParts error: %s", err)
+                return []model.Part{}, err
+        }</span>
+
+        <span class="cov1" title="1">log.Printf("ListParts completed")
+        result := make([]model.Part, 0, len(parts))
+        for _, part := range parts </span><span class="cov10" title="2">{
+                result = append(result, converter.RepoPartToServicePart(part))
+        }</span>
+
+        <span class="cov1" title="1">return result, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package inventory
+
+import (
+        "github.com/stas-tsarev/dz1_order_service/inventory/internal/repository"
+        def "github.com/stas-tsarev/dz1_order_service/inventory/internal/service"
+)
+
+var _ def.InventoryService = (*service)(nil)
+
+type service struct {
+        inventoryRepo repository.InventoryRepository
+}
+
+func NewService(inventoryRepo repository.InventoryRepository) *service <span class="cov10" title="6">{
+        return &amp;service{
+                inventoryRepo: inventoryRepo,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package model
+
+import "time"
+
+// Value - интерфейс для метаданных
+type Value interface {
+        GetValue() interface{}
+        GetType() string
+}
+
+// StringValue - строковое значение
+type StringValue struct {
+        Value string `json:"value"`
+}
+
+func (s StringValue) GetValue() interface{} <span class="cov0" title="0">{
+        return s.Value
+}</span>
+
+func (s StringValue) GetType() string <span class="cov0" title="0">{
+        return "string"
+}</span>
+
+// Int64Value - целочисленное значение
+type Int64Value struct {
+        Value int64 `json:"value"`
+}
+
+func (i Int64Value) GetValue() interface{} <span class="cov0" title="0">{
+        return i.Value
+}</span>
+
+func (i Int64Value) GetType() string <span class="cov0" title="0">{
+        return "int64"
+}</span>
+
+// DoubleValue - дробное значение
+type DoubleValue struct {
+        Value float64 `json:"value"`
+}
+
+func (d DoubleValue) GetValue() interface{} <span class="cov0" title="0">{
+        return d.Value
+}</span>
+
+func (d DoubleValue) GetType() string <span class="cov0" title="0">{
+        return "double"
+}</span>
+
+// BoolValue - логическое значение
+type BoolValue struct {
+        Value bool `json:"value"`
+}
+
+func (b BoolValue) GetValue() interface{} <span class="cov0" title="0">{
+        return b.Value
+}</span>
+
+func (b BoolValue) GetType() string <span class="cov0" title="0">{
+        return "bool"
+}</span>
+
+type Category int
+
+const (
+        CATEGORY_UNKNOWN_UNSPECIFIED Category = iota // Неизвестная категория
+        CATEGORY_ENGINE                              // Двигатель
+        CATEGORY_FUEL                                // Топливо
+        CATEGORY_PORTHOLE                            // Иллюминатор
+        CATEGORY_WING                                // Крыло                 // Деньги инвестора (внутренний метод)
+)
+
+func (i Category) String() string <span class="cov0" title="0">{
+        switch i </span>{
+        case CATEGORY_UNKNOWN_UNSPECIFIED:<span class="cov0" title="0">
+                return "CATEGORY_UNKNOWN_UNSPECIFIED"</span>
+        case CATEGORY_ENGINE:<span class="cov0" title="0">
+                return "CATEGORY_ENGINE"</span>
+        case CATEGORY_FUEL:<span class="cov0" title="0">
+                return "CATEGORY_FUEL"</span>
+        case CATEGORY_PORTHOLE:<span class="cov0" title="0">
+                return "CATEGORY_PORTHOLE"</span>
+        case CATEGORY_WING:<span class="cov0" title="0">
+                return "CATEGORY_WING"</span>
+        }
+        <span class="cov0" title="0">return "CATEGORY_UNKNOWN_UNSPECIFIED"</span>
+}
+
+type Dimensions struct {
+        Length float64
+        Width  float64
+        Height float64
+        Weight float64
+}
+
+type Manufacturer struct {
+        Name    string
+        Country string
+        WebSite string
+}
+
+type PartInfo struct {
+        Name          string // Название детали
+        Description   string
+        Price         float64
+        StockQuantity int64
+        Category      Category
+        Dimensions    Dimensions
+        Manufacturer  Manufacturer
+        Tags          []string
+        Metadata      map[string]Value
+}
+
+// Part содержит в себе информацию о детали
+type Part struct {
+        Uuid      string
+        Info      PartInfo
+        CreatedAt time.Time
+        UpdatedAt time.Time
+}
+
+type PartsFilter struct {
+        Uuids                 []string
+        Names                 []string
+        Categories            []Category
+        ManufacturerCountries []string
+        Tags                  []string
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package model
+
+type Method int
+
+const (
+        PAYMENT_METHOD_UNKNOWN_UNSPECIFIED Method = iota // Неизвестный способ
+        PAYMENT_METHOD_CARD                              // Банковская карта
+        PAYMENT_METHOD_SBP                               // Система быстрых платежей
+        PAYMENT_METHOD_CREDIT_CARD                       // Кредитная карта
+        PAYMENT_METHOD_INVESTOR_MONEY                    // Деньги инвестора (внутренний метод)
+)
+
+func (i Method) String() string <span class="cov0" title="0">{
+        switch i </span>{
+        case PAYMENT_METHOD_UNKNOWN_UNSPECIFIED:<span class="cov0" title="0">
+                return "PAYMENT_METHOD_UNKNOWN_UNSPECIFIED"</span>
+        case PAYMENT_METHOD_CARD:<span class="cov0" title="0">
+                return "PAYMENT_METHOD_CARD"</span>
+        case PAYMENT_METHOD_SBP:<span class="cov0" title="0">
+                return "PAYMENT_METHOD_SBP"</span>
+        case PAYMENT_METHOD_CREDIT_CARD:<span class="cov0" title="0">
+                return "PAYMENT_METHOD_CREDIT_CARD"</span>
+        case PAYMENT_METHOD_INVESTOR_MONEY:<span class="cov0" title="0">
+                return "PAYMENT_METHOD_INVESTOR_MONEY"</span>
+        }
+        <span class="cov0" title="0">return "PAYMENT_METHOD_UNKNOWN_UNSPECIFIED"</span>
+}
+
+type Order struct {
+        OrderUuid       string
+        UserUuid        string
+        PartUuids       []string
+        TotalPrice      float64
+        TransactionUuid *string
+        PaymentMethod   *string
+        Status          string
+}
+
+type CreateOrderReq struct {
+        UserUuid   string
+        PartUuids  []string
+        TotalPrice float64
+}
+
+type CreateOrderResp struct {
+        OrderUuid  string
+        TotalPrice float64
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package order
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+)
+
+func (r *repository) CancelOrder(_ context.Context, orderUuid string) error <span class="cov0" title="0">{
+        r.mu.Lock()
+        defer r.mu.Unlock()
+
+        order, ok := r.data[orderUuid]
+        if !ok </span><span class="cov0" title="0">{
+                return errs.ErrorOrderNotFound
+        }</span>
+
+        <span class="cov0" title="0">if order.Status == "PAID" </span><span class="cov0" title="0">{
+                return errs.ErrorConflict
+        }</span>
+
+        <span class="cov0" title="0">order.Status = "CANCELED"
+        r.data[orderUuid] = order
+
+        return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package order
+
+import (
+        "context"
+
+        "github.com/google/uuid"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/repository/model"
+)
+
+func (r *repository) CreateOrder(_ context.Context, userUuid string, partUuids []string, totalPrice float64) (string, float64, error) <span class="cov0" title="0">{
+        r.mu.Lock()
+        defer r.mu.Unlock()
+
+        newUuid := uuid.NewString()
+
+        r.data[newUuid] = model.Order{
+                OrderUuid:       newUuid,
+                UserUuid:        userUuid,
+                PartUuids:       partUuids,
+                TotalPrice:      totalPrice,
+                TransactionUuid: nil,
+                PaymentMethod:   nil,
+                Status:          "PENDING_PAYMENT",
+        }
+
+        return newUuid, totalPrice, nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package order
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/repository/model"
+)
+
+func (r *repository) GetOrder(_ context.Context, orderUuid string) (model.Order, error) <span class="cov0" title="0">{
+        r.mu.RLock()
+        defer r.mu.RUnlock()
+
+        order, ok := r.data[orderUuid]
+        if !ok </span><span class="cov0" title="0">{
+                return model.Order{}, errs.ErrorOrderNotFound
+        }</span>
+
+        <span class="cov0" title="0">return order, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package order
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/repository/model"
+)
+
+func (r *repository) PayOrder(_ context.Context, orderUuid string, paymentMethod string, transactionUuid string) error <span class="cov0" title="0">{
+        r.mu.Lock()
+        defer r.mu.Unlock()
+
+        tmp, ok := r.data[orderUuid]
+
+        if !ok </span><span class="cov0" title="0">{
+                return errs.ErrorOrderNotFound
+        }</span>
+
+        <span class="cov0" title="0">r.data[orderUuid] = model.Order{
+                OrderUuid:       orderUuid,
+                UserUuid:        tmp.UserUuid,
+                TotalPrice:      tmp.TotalPrice,
+                TransactionUuid: &amp;transactionUuid,
+                PaymentMethod:   &amp;paymentMethod,
+                Status:          "PAID",
+        }
+
+        return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package order
+
+import (
+        "sync"
+
+        def "github.com/stas-tsarev/dz1_order_service/order/internal/repository"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/repository/model"
+)
+
+var _ def.OrderRepository = (*repository)(nil)
+
+type repository struct {
+        mu   sync.RWMutex
+        data map[string]model.Order
+}
+
+func NewRepository() *repository <span class="cov0" title="0">{
+        return &amp;repository{
+                data: make(map[string]model.Order),
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package converter
+
+import (
+        repomodel "github.com/stas-tsarev/dz1_order_service/order/internal/repository/model"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/service/model"
+)
+
+func RepoOrderToServiceOrder(order repomodel.Order) model.Order <span class="cov10" title="2">{
+        return model.Order{
+                OrderUuid:       order.OrderUuid,
+                UserUuid:        order.UserUuid,
+                PartUuids:       order.PartUuids,
+                TotalPrice:      order.TotalPrice,
+                TransactionUuid: order.TransactionUuid,
+                PaymentMethod:   order.PaymentMethod,
+                Status:          order.Status,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package order
+
+import (
+        "context"
+        "errors"
+
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+)
+
+func (s *service) CancelOrder(ctx context.Context, orderUuid string) error <span class="cov10" title="3">{
+        err := s.orderRepository.CancelOrder(ctx, orderUuid)
+
+        if err != nil </span><span class="cov6" title="2">{
+                if errors.Is(err, errs.ErrorOrderNotFound) </span><span class="cov1" title="1">{
+                        return errs.ErrorOrderNotFound
+                }</span>
+                <span class="cov1" title="1">if errors.Is(err, errs.ErrorConflict) </span><span class="cov1" title="1">{
+                        return errs.ErrorConflict
+                }</span>
+        }
+        <span class="cov1" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package order
+
+import (
+        "context"
+
+        model2 "github.com/stas-tsarev/dz1_order_service/order/internal/client/model"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+)
+
+func (s *service) CreateOrder(ctx context.Context, userUuid string, partUuids []string) (string, float64, error) <span class="cov6" title="2">{
+        parts, err := s.inventoryClient.ListParts(ctx, model2.PartsFilter{
+                Uuids:                 partUuids,
+                Names:                 nil,
+                Categories:            nil,
+                ManufacturerCountries: nil,
+                Tags:                  nil,
+        })
+
+        if err != nil || len(parts) != len(partUuids) </span><span class="cov1" title="1">{
+                return "", 0, errs.ErrorUnprocessableEntity
+        }</span>
+
+        <span class="cov1" title="1">var totalPrice float64 = 0
+        for _, part := range parts </span><span class="cov10" title="3">{
+                totalPrice += part.Info.Price
+        }</span>
+
+        <span class="cov1" title="1">orderUuid, _, _ := s.orderRepository.CreateOrder(ctx, userUuid, partUuids, totalPrice)
+
+        return orderUuid, totalPrice, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package order
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/service/converter"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/service/model"
+)
+
+func (s *service) GetOrder(ctx context.Context, orderUuid string) (model.Order, error) <span class="cov10" title="2">{
+        order, err := s.orderRepository.GetOrder(ctx, orderUuid)
+        if err != nil </span><span class="cov1" title="1">{
+                return model.Order{}, errs.ErrorOrderNotFound
+        }</span>
+
+        <span class="cov1" title="1">return converter.RepoOrderToServiceOrder(order), nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package order
+
+import (
+        "context"
+
+        "github.com/stas-tsarev/dz1_order_service/order/internal/errs"
+)
+
+func (s *service) PayOrder(ctx context.Context, orderUuid string, userUuid string, paymentMethod string) (string, error) <span class="cov10" title="3">{
+        transactionUuid, err := s.paymentClient.PayOrder(ctx, orderUuid, userUuid, paymentMethod)
+        if err != nil </span><span class="cov1" title="1">{
+                return "", err
+        }</span>
+
+        <span class="cov6" title="2">err = s.orderRepository.PayOrder(ctx, orderUuid, paymentMethod, transactionUuid)
+        if err != nil </span><span class="cov1" title="1">{
+                return "", errs.ErrorOrderNotFound
+        }</span>
+        <span class="cov1" title="1">return transactionUuid, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package order
+
+import (
+        "github.com/stas-tsarev/dz1_order_service/order/internal/client/grpc"
+        "github.com/stas-tsarev/dz1_order_service/order/internal/repository"
+        def "github.com/stas-tsarev/dz1_order_service/order/internal/service"
+)
+
+var _ def.OrderService = (*service)(nil)
+
+type service struct {
+        orderRepository repository.OrderRepository
+
+        inventoryClient grpc.InventoryClient
+        paymentClient   grpc.PaymentClient
+}
+
+func NewService(
+        orderRepository repository.OrderRepository,
+        inventoryClient grpc.InventoryClient,
+        paymentClient grpc.PaymentClient) *service <span class="cov10" title="10">{
+        return &amp;service{
+                orderRepository: orderRepository,
+                inventoryClient: inventoryClient,
+                paymentClient:   paymentClient,
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package payment
+
+import (
+        "context"
+        "log"
+
+        "github.com/google/uuid"
+        "github.com/stas-tsarev/dz1_order_service/payment/internal/model"
+)
+
+func (s *service) PayOrder(_ context.Context, _ model.PaymentInfo) (string, error) <span class="cov8" title="1">{
+        uuid := uuid.New()
+        log.Printf("Create payment with uuid: %s", uuid)
+
+        return uuid.String(), nil
+}</span>
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package payment
+
+import def "github.com/stas-tsarev/dz1_order_service/payment/internal/service"
+
+var _ def.PaymentService = (*service)(nil)
+
+type service struct{}
+
+func NewService() *service <span class="cov8" title="1">{
+        return &amp;service{}
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

@@ -1,0 +1,2 @@
+// Code generated for stas-tsarev service
+// © Stanislav Tsarev 2026.

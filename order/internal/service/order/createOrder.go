@@ -16,7 +16,7 @@ func (s *service) CreateOrder(ctx context.Context, userUuid string, partUuids []
 		Tags:                  nil,
 	})
 
-	if err != nil {
+	if err != nil || len(parts) != len(partUuids) {
 		return "", 0, errs.ErrorUnprocessableEntity
 	}
 

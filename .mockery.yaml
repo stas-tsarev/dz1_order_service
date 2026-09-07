@@ -1,0 +1,35 @@
+with-expecter: true
+boilerplate-file: ".mockery_boilerplate_text.txt"
+dir: "{{.InterfaceDir}}/mocks"
+filename: "mock_{{.InterfaceNameSnake}}.go"
+outpkg: "mocks"
+mockname: "{{.InterfaceName}}"
+resolve-type-alias: False
+issue-845-fix: True
+
+packages:
+  github.com/stas-tsarev/dz1_order_service/payment/internal/service:
+    config:
+      include-regex: ".*Service"
+
+  github.com/stas-tsarev/dz1_order_service/inventory/internal/service:
+    config:
+      include-regex: ".*Service"
+
+  github.com/stas-tsarev/dz1_order_service/order/internal/service:
+    config:
+      include-regex: ".*Service"
+
+
+  github.com/stas-tsarev/dz1_order_service/inventory/internal/repository:
+    config:
+      include-regex: ".*Repository"
+
+  github.com/stas-tsarev/dz1_order_service/order/internal/repository:
+    config:
+      include-regex: ".*Repository"
+
+
+  github.com/stas-tsarev/dz1_order_service/order/internal/client/grpc:
+    config:
+      include-regex: ".*Client"
