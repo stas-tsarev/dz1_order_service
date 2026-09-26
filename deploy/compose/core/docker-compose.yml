@@ -1,0 +1,64 @@
+services:
+  inventory:
+    build:
+      context: ../../..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: inventory
+    container_name: dz1_inventory
+    ports:
+      - "50051:50051"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 50051 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  payment:
+    build:
+      context: ../../..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: payment
+    container_name: dz1_payment
+    ports:
+      - "50052:50052"
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "nc -z localhost 50052 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  order:
+    build:
+      context: ../../..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: order
+    container_name: dz1_order
+    ports:
+      - "8080:8080"
+    environment:
+      - INVENTORY_ADDR=inventory:50051
+      - PAYMENT_ADDR=payment:50052
+    networks:
+      - microservices-net
+    restart: unless-stopped
+    depends_on:
+      inventory:
+        condition: service_healthy
+      payment:
+        condition: service_healthy
+
+networks:
+  microservices-net:
+    driver: bridge
+    # ВАЖНО: здесь мы создаём сеть с именем microservices-net
+    # Другие docker-compose файлы будут к ней подключаться с external: true

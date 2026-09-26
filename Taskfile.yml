@@ -346,6 +346,19 @@ tasks:
           echo "📂 Отчёт сохранён в $OUTPUT (открой вручную)"
         fi
 
+  up-core:
+    desc: Поднять core контейнеры
+    dir: deploy/compose/core
+    cmds:
+      - echo "[task] 🚀 Поднимаем core контейнеры"
+      - docker compose up --build --detach
+
+  down-core:
+    desc: Остановить и удалить core контейнеры
+    dir: deploy/compose/core
+    cmds:
+      - echo "[task] 🛑 Останавливаем core контейнеры"
+      - docker compose down --volumes
 
   test-api:
     desc: "🧪 Запуск тестов для проверки API микросервисов"

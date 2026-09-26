@@ -20,6 +20,7 @@ func (r *repository) PayOrder(_ context.Context, orderUuid string, paymentMethod
 	r.data[orderUuid] = model.Order{
 		OrderUuid:       orderUuid,
 		UserUuid:        tmp.UserUuid,
+		PartUuids:       tmp.PartUuids,
 		TotalPrice:      tmp.TotalPrice,
 		TransactionUuid: &transactionUuid,
 		PaymentMethod:   &paymentMethod,

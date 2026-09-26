@@ -346,7 +346,7 @@ func main() {
 	ctx := context.Background()
 
 	connInv, err := grpc.NewClient(
-		"localhost:50051",
+		"inventory:50051",
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -361,7 +361,7 @@ func main() {
 
 	// Payment Client
 	connPay, err := grpc.NewClient(
-		"localhost:50052",
+		"payment:50052",
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -394,7 +394,7 @@ func main() {
 	r.Mount("/", orderServer)
 
 	server := &http.Server{
-		Addr:              net.JoinHostPort("localhost", httpPortOrder),
+		Addr:              net.JoinHostPort("0.0.0.0", httpPortOrder),
 		Handler:           r,
 		ReadHeaderTimeout: readHeaderTimeout,
 	}
